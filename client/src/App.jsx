@@ -1,15 +1,17 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/LoginPage.jsx";
-import RegisterPage from "./pages/RegisterPage.jsx";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import LoginPage from "./pages/auth/LoginPage.jsx";
+import RegisterPage from "./pages/auth/RegisterPage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
+import "./App.css";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
 
