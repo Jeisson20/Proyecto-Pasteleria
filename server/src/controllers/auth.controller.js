@@ -21,7 +21,7 @@ export const register = async (req, res) => {
         );
 
         const newUser = result.rows[0]
-        const token = await createAccessToken({ id: newUser.id })
+        const token = await createAccessToken({ id: newUser.id, rol: newUser.rol })
 
         res.cookie('token', token)
         res.json(newUser)
@@ -42,7 +42,7 @@ export const login = async (req, res) => {
         const isMatch = await bcrypt.compare(password, userFound.password)
         if (!isMatch) return res.status(401).json({ message: 'Contraseña incorrecta' })
 
-        const token = await createAccessToken({ id: userFound.id })
+        const token = await createAccessToken({ id: userFound.id, rol: userFound.rol })
 
         res.cookie('token', token)
         res.json({

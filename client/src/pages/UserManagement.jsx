@@ -1,6 +1,7 @@
-import fondoPasteleria from "../assets/fondoPasteleria.png";
+import UserTable from "../components/UsersTable.jsx";
 import Sidebar from "../components/Sidebar.jsx";
-function DashboardPage() {
+import fondoPasteleria from "../assets/fondoPasteleria.png";
+export default function UserManagement() {
   return (
     <div
       className="app-container"
@@ -10,9 +11,8 @@ function DashboardPage() {
         <Sidebar />
       </div>
       <main className="main-content">
-        <h1>pagina principal</h1>
+        <UserTable />
       </main>
     </div>
   );
 }
-export default DashboardPage;

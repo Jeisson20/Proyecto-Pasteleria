@@ -1,0 +1,57 @@
+th {
+  background: #8d76f5ab;
+  padding: 10px;
+  font-weight: 600;
+  text-align: left;
+  color: #0f0f0f;
+  border-bottom: 1px solid #ddd;
+}
+
+td {
+  padding: 12px 0;
+  border-top: 1px solid #eee;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+select,
+input[type="checkbox"] {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.delete-btn {
+  border: none;
+  background: none;
+  color: #e57373;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.delete-btn:hover {
+  transform: scale(1.2);
+  color: #d32f2f;
+}
+
+@media (max-width: 768px) {
+  .table-container {
+    padding: 0.5rem;
+    border-radius: 8px;
+  }
+
+  table {
+    font-size: 14px;
+    min-width: 100%;
+  }
+
+  th,
+  td {
+    padding: 10px;
+  }
+
+  .delete-btn {
+    font-size: 18px;
+  }
+}

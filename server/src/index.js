@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
 import authRoutes from './routes/auth.routes.js'
-
+import userRoutes from './routes/users.routes.js'
 
 const app = express()
 app.use(cors({
@@ -16,4 +16,5 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use("/api", authRoutes)
+app.use("/api", userRoutes)
 app.listen(3000)
