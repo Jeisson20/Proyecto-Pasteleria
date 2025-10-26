@@ -2,7 +2,6 @@ import { createContext, useContext, useState } from "react";
 import {
   getUsersRequest,
   deleteUserRequest,
-  getUserRequest,
   updateUserRequest,
 } from "../api/users";
 
@@ -52,7 +51,13 @@ export const UsersProvider = ({ children }) => {
 
   return (
     <UsersContext.Provider
-      value={{ users, getUsers, deleteUser, getUserRequest, updateUser }}
+      value={{
+        users,
+        getUsers,
+        deleteUser,
+        updateUser,
+        useUsers,
+      }}
     >
       {children}
     </UsersContext.Provider>

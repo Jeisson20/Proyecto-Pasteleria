@@ -1,12 +1,16 @@
-import axios from "./axios.js";
+// Importamos la instancia personalizada de Axios 
+import axios from "./axios.js"
 
-export const getUsersRequest = () => axios.get("/users");
+// Obtener todos los usuarios
+// Realiza una petición GET al endpoint /users
+export const getUsersRequest = () => axios.get("/users")
 
-export const getUserRequest = (id) => axios.get(`/users/${id}`);
-
+// Actualizar un usuario por ID
+// Realiza una petición PUT al endpoint /users/:id con los datos actualizados
 export const updateUserRequest = (id, data) =>
-    axios.put(`/users/${id}`, data);
+    axios.put(`/users/${id}`, data)
 
-
+// Eliminar un usuario por ID
+// Realiza una petición DELETE al endpoint /users/:id
 export const deleteUserRequest = (id) =>
-    axios.delete(`/users/${id}`);
+    axios.delete(`/users/${id}`)

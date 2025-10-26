@@ -1,57 +1,52 @@
-th {
-  background: #8d76f5ab;
-  padding: 10px;
-  font-weight: 600;
-  text-align: left;
-  color: #0f0f0f;
-  border-bottom: 1px solid #ddd;
+.content-table {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding: 80px 200px;
+  flex-direction: column;
+  & h1 {
+    color: #fff;
+  }
+
+  & p {
+    color: #f0f0ff;
+  }
 }
 
-td {
-  padding: 12px 0;
-  border-top: 1px solid #eee;
+.user-table {
+  width: 100%;
   text-align: center;
-  color: #ffffff;
-  font-weight: 600;
+  border-collapse: collapse;
+  background: #b5efffb0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-select,
-input[type="checkbox"] {
-  cursor: pointer;
-  transform: scale(1.1);
+.user-table th {
+  background: #ff7b00c7;
+  padding: 12px;
+  text-align: center;
 }
 
-.delete-btn {
+.user-table td {
+  padding: 10px;
+  border-bottom: 1px solid #f3f8ab;
+}
+
+.user-table tr:hover {
+  background: #f0f0ff;
+}
+
+.button-table {
+  background: #ffb6b6;
   border: none;
-  background: none;
-  color: #e57373;
-  font-size: 20px;
+  padding: 6px 10px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: background 0.3s;
 }
 
-.delete-btn:hover {
-  transform: scale(1.2);
-  color: #d32f2f;
-}
-
-@media (max-width: 768px) {
-  .table-container {
-    padding: 0.5rem;
-    border-radius: 8px;
-  }
-
-  table {
-    font-size: 14px;
-    min-width: 100%;
-  }
-
-  th,
-  td {
-    padding: 10px;
-  }
-
-  .delete-btn {
-    font-size: 18px;
-  }
+.button-table:hover {
+  background: #ff8da1;
 }
