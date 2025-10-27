@@ -8,29 +8,24 @@ import { useEffect } from "react";
 import "./authPages.css";
 
 function LoginPage() {
-  // Inicializamos react-hook-form
   const {
-    register, // registra inputs en el formulario
-    handleSubmit, // función que maneja el submit
-    formState: { errors }, // errores de validación
+    register,
+    handleSubmit,
+    formState: { errors },
   } = useForm();
 
-  // Extraemos funciones y estados del contexto de autenticación
   const { signIn, isAuthenticated, errors: signinErrors } = useAuth();
 
-  // Hook de navegación
   const navigation = useNavigate();
 
-  // Si el usuario ya está autenticado, redirigimos al dashboard
   useEffect(() => {
     if (isAuthenticated) {
       navigation("/dashboard");
     }
   }, [isAuthenticated, navigation]);
 
-  // Función que se ejecuta al enviar el formulario
   const onSubmit = handleSubmit(async (values) => {
-    await signIn(values); // Llama a signIn con email y password
+    await signIn(values);
   });
 
   return (
@@ -39,18 +34,15 @@ function LoginPage() {
       style={{ backgroundImage: `url(${fondoPasteleria})` }}
     >
       <div className="container-form">
-        {/* Mostramos errores de autenticación si existen */}
         {signinErrors.map((error, i) => (
           <div key={i} className="error">
             {error}
           </div>
         ))}
 
-        {/* Formulario de login */}
         <form onSubmit={onSubmit}>
           <h1>Iniciar Sesión</h1>
 
-          {/* Input de email */}
           <div className="input-box">
             <MdEmail className="icon" />
             <input
@@ -62,7 +54,6 @@ function LoginPage() {
           </div>
           {errors.email && <span>El email es requerido</span>}
 
-          {/* Input de contraseña */}
           <div className="input-box">
             <FaLock className="icon" />
             <input
@@ -74,10 +65,8 @@ function LoginPage() {
           </div>
           {errors.password && <span>La contraseña es requerida</span>}
 
-          {/* Botón de submit */}
           <button type="submit">Iniciar Sesión</button>
 
-          {/* Link a registro */}
           <div className="auth-link">
             <p>
               ¿No tienes una cuenta?{" "}
