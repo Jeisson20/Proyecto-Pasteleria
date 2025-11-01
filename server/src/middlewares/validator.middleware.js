@@ -1,6 +1,8 @@
+import { getSchema } from '../validation/auth.strategy.js';
 
-export const validateSchema = (schema) => (req, res, next) => {
+export const validateSchema = (tipo) => (req, res, next) => {
     try {
+        const schema = getSchema(tipo);
         schema.parse(req.body)
 
         next()
@@ -13,4 +15,3 @@ export const validateSchema = (schema) => (req, res, next) => {
         return res.status(500).json({ errors: ["Error de validación inesperado"] })
     }
 }
-

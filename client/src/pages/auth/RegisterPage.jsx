@@ -1,23 +1,20 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../hook/useAuth.jsx";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { FaUser } from "react-icons/fa";
-import { BiLockAlt } from "react-icons/bi";
+import { FaUser, FaLock, FaUserPlus } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import fondoPasteleria from "../../assets/fondoPasteleria.png";
 import "./authPages.css";
 
 function RegisterPage() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const { signUp, isAuthenticated, errors: registerErrors } = useAuth();
 
   const navigation = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -31,7 +28,7 @@ function RegisterPage() {
 
   return (
     <div
-      className="container"
+      className="container-auth"
       style={{ backgroundImage: `url(${fondoPasteleria})` }}
     >
       <div className="container-form">
@@ -42,7 +39,7 @@ function RegisterPage() {
         ))}
 
         <form onSubmit={onSubmit}>
-          <h1>Regístrate</h1>
+          <FaUserPlus className="logo-auth" />
 
           <div className="input-box">
             <FaUser className="icon" />
@@ -53,7 +50,6 @@ function RegisterPage() {
             />
             <label>Usuario</label>
           </div>
-          {errors.username && <span>El nombre es requerido</span>}
 
           <div className="input-box">
             <MdEmail className="icon" />
@@ -64,18 +60,23 @@ function RegisterPage() {
             />
             <label>Correo</label>
           </div>
-          {errors.email && <span>El email es requerido</span>}
 
           <div className="input-box">
-            <BiLockAlt className="icon" />
+            <FaLock className="icon" />
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               {...register("password", { required: true })}
               required
             />
             <label>Contraseña</label>
+
+            <span
+              className="eye-icon"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
-          {errors.password && <span>La contraseña es requerida</span>}
 
           <button type="submit">Registrarse</button>
 

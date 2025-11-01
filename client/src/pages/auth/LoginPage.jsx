@@ -4,19 +4,18 @@ import { useNavigate, Link } from "react-router-dom";
 import fondoPasteleria from "../../assets/fondoPasteleria.png";
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { useEffect } from "react";
+import { FaEye, FaEyeSlash, FaUser } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import "./authPages.css";
 
 function LoginPage() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const { signIn, isAuthenticated, errors: signinErrors } = useAuth();
 
   const navigation = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -30,7 +29,7 @@ function LoginPage() {
 
   return (
     <div
-      className="container"
+      className="container-auth"
       style={{ backgroundImage: `url(${fondoPasteleria})` }}
     >
       <div className="container-form">
@@ -41,7 +40,7 @@ function LoginPage() {
         ))}
 
         <form onSubmit={onSubmit}>
-          <h1>Iniciar Sesión</h1>
+          <FaUser className="logo-auth" />
 
           <div className="input-box">
             <MdEmail className="icon" />
@@ -52,18 +51,23 @@ function LoginPage() {
             />
             <label>Correo</label>
           </div>
-          {errors.email && <span>El email es requerido</span>}
 
           <div className="input-box">
             <FaLock className="icon" />
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               {...register("password", { required: true })}
               required
             />
             <label>Contraseña</label>
+
+            <span
+              className="eye-icon"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
-          {errors.password && <span>La contraseña es requerida</span>}
 
           <button type="submit">Iniciar Sesión</button>
 

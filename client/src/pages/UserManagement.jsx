@@ -1,8 +1,8 @@
-import UserTable from "../components/UsersTable.jsx";
+import { UsersTemplate } from "../components/templates/UsersTemplate.jsx";
 export default function UserManagement() {
   return (
     <div>
-      <UserTable />
+      <UsersTemplate />
     </div>
   );
 }

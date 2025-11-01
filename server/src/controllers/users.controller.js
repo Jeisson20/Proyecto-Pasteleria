@@ -1,4 +1,3 @@
-// Importamos el pool de conexiones a PostgreSQL
 import pool from "../db.js"
 
 export const getAllUsers = async (req, res) => {

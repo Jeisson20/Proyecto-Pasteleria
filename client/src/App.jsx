@@ -1,40 +1,28 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "./pages/auth/LoginPage.jsx";
-import RegisterPage from "./pages/auth/RegisterPage.jsx";
-import DashboardPage from "./pages/DashboardPage.jsx";
-import UserManagement from "./pages/UserManagement.jsx";
-import ProtectedRoute from "./ProtectedRoute.jsx";
+import { BrowserRouter } from "react-router-dom";
+import { useState } from "react";
+import { ThemeProvider } from "styled-components";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { UsersProvider } from "./context/UsersContext.jsx";
-import DashboardLayout from "./layouts/DashboardLayout.jsx";
-
-import "./styles/global.css";
-import "./styles/layout.css";
-import "./styles/users.css";
-import "./styles/dashboard.css";
-
-import "./App.css";
+import { ThemeContext } from "./context/ThemeContext.jsx";
+import { Light, Dark } from "./styles/themes.jsx";
+import AppContent from "./layout/AppContent.jsx";
 
 function App() {
-  return (
-    <AuthProvider>
-      <UsersProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+  const [themeuse, setTheme] = useState("dark");
+  const themeStyle = themeuse === "light" ? Light : Dark;
 
-            <Route element={<ProtectedRoute />}>
-              <Route element={<DashboardLayout />}>
-                <Route path="/dashboard" element={<DashboardPage />} />
-                <Route path="/users" element={<UserManagement />} />
-              </Route>
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </UsersProvider>
-    </AuthProvider>
+  return (
+    <ThemeContext.Provider value={{ theme: themeuse, setTheme }}>
+      <ThemeProvider theme={themeStyle}>
+        <AuthProvider>
+          <UsersProvider>
+            <BrowserRouter>
+              <AppContent />
+            </BrowserRouter>
+          </UsersProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </ThemeContext.Provider>
   );
 }
 

@@ -1,16 +1,12 @@
-import { login, register, logout, verifyToken } from "../controllers/auth.controller.js"
+import { login, register, verifyToken } from "../controllers/auth.controller.js"
 import { Router } from "express"
 import { validateSchema } from "../middlewares/validator.middleware.js"
 
-import { registerSchema, loginSchema } from "../schemas/auth.schema.js"
-
 const router = Router()
 
-router.post('/register', validateSchema(registerSchema), register)
+router.post('/register', validateSchema('register'), register)
 
-router.post('/login', validateSchema(loginSchema), login)
-
-router.post('/logout', logout)
+router.post('/login', validateSchema('login'), login)
 
 router.get("/verify", verifyToken)
 
