@@ -4,6 +4,7 @@ import {
   deleteUserRequest,
   updateUserRequest,
 } from "../api/users";
+import { useAuth } from "../hook/useAuth.jsx";
 
 const UsersContext = createContext();
 
@@ -17,6 +18,7 @@ export const useUsers = () => {
 
 export const UsersProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
+  const { user: authUser, setUser } = useAuth();
 
   const getUsers = async () => {
     try {
@@ -38,12 +40,22 @@ export const UsersProvider = ({ children }) => {
 
   const updateUser = async (id, updatedData) => {
     try {
-      await updateUserRequest(id, updatedData);
+      const res = await updateUserRequest(id, updatedData);
       setUsers((prev) =>
-        prev.map((user) =>
-          user.id === id ? { ...user, ...updatedData } : user
-        )
+        prev.map((u) => (u.id === id ? { ...u, ...res.data } : u))
       );
+
+      if (authUser?.id === id) {
+        let updated = res.data;
+        if (typeof updated.permisos === "string") {
+          try {
+            updated.permisos = JSON.parse(updated.permisos);
+          } catch {
+            updated.permisos = {};
+          }
+        }
+        setUser(updated);
+      }
     } catch (error) {
       console.log(error);
     }

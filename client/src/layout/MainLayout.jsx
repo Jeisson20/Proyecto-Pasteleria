@@ -38,7 +38,7 @@ const Container = styled.main`
   .ContentMenuambur {
     display: block;
     position: absolute;
-    left: 20px;
+    left: 0;
   }
 
   @media ${Device.tablet} {

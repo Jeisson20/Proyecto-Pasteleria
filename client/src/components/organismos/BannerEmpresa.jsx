@@ -7,11 +7,9 @@ export function BannerEmpresa() {
       <div className="content-wrapper-context">
         <span className="titulo">
           {<v.iconoempresa />}
-          ejemplo
+          Pasteleria "La Esquina"
         </span>
-        <div className="content-text">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-        </div>
+        <div className="content-text">Resumen de pedidos y clientes:</div>
         <ContentCards>
           <CardDatosEmpresa titulo="Pedidos" valor="999" />
 
@@ -20,7 +18,7 @@ export function BannerEmpresa() {
       </div>
       <div className="contentsvg">
         <svg
-          class="opacity-0 group-hover:opacity-100 transform-gpu transition-all will-change-auto duration-600 ease-in-out"
+          className="opacity-0 group-hover:opacity-100 transform-gpu transition-all will-change-auto duration-600 ease-in-out"
           viewBox="0 0 492 253"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -43,9 +41,9 @@ export function BannerEmpresa() {
               width="734.383"
               height="794.376"
               filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
+              colorInterpolationFilters="sRGB"
             >
-              <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+              <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
               <feBlend
                 mode="normal"
                 in="SourceGraphic"

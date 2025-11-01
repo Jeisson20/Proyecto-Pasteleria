@@ -23,12 +23,23 @@ export const AuthProvider = ({ children }) => {
       setErrors(error.response.data);
     }
   };
+  const normalizeUser = (data) => {
+    if (data && typeof data.permisos === "string") {
+      try {
+        data.permisos = JSON.parse(data.permisos);
+      } catch (e) {
+        data.permisos = {};
+        console.log(e);
+      }
+    }
+    return data;
+  };
 
   const signIn = async (user) => {
     try {
       const res = await loginRequest(user);
       setIsAuthenticated(true);
-      setUser(res.data);
+      setUser(normalizeUser(res.data));
     } catch (error) {
       if (Array.isArray(error.response.data)) {
         return setErrors(error.response.data);
@@ -68,7 +79,7 @@ export const AuthProvider = ({ children }) => {
           return;
         }
         setIsAuthenticated(true);
-        setUser(res.data);
+        setUser(normalizeUser(res.data));
         setLoading(false);
       } catch (error) {
         setIsAuthenticated(false);
@@ -87,6 +98,7 @@ export const AuthProvider = ({ children }) => {
         signIn,
         loading,
         user,
+        setUser,
         isAuthenticated,
         errors,
         logout,

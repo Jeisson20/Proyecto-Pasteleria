@@ -26,18 +26,21 @@ export const LinksArray = [
     icon: <v.iconoProductos />,
     to: "/productos",
     roles: ["admin", "empleado", "cliente"],
+    permisoKey: "productos",
   },
   {
     label: "Clientes",
     icon: <v.iconoCliente />,
     to: "/clientes",
     roles: ["admin", "empleado"],
+    permisoKey: "clientes",
   },
   {
     label: "Pedidos",
     icon: <v.iconoPedidos />,
     to: "/pedidos",
     roles: ["admin", "empleado", "cliente"],
+    permisoKey: "pedidos",
   },
 ];
 
@@ -45,7 +48,7 @@ export const SecondarylinksArray = [
   {
     label: "Usuarios",
     icon: <v.iconoUsuarios />,
-    to: "/users",
+    to: "/usuarios",
     roles: ["admin"],
   },
 ];

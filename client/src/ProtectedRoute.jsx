@@ -12,7 +12,7 @@ function ProtectedRoute({ roles = [] }) {
   const hasAccess = roles.length === 0 || roles.includes(userRole);
 
   if (!hasAccess) {
-    if (userRole === "cliente") return <Navigate to="roductos" replace />;
+    if (userRole === "cliente") return <Navigate to="productos" replace />;
     return <Navigate to="/dashboard" replace />;
   }
 

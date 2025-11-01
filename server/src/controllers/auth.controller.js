@@ -21,7 +21,7 @@ export const register = async (req, res) => {
 
         const newUser = result.rows[0]
 
-        const token = await createAccessToken({ id: newUser.id, rol: newUser.rol })
+        const token = await createAccessToken({ id: newUser.id, rol: newUser.rol, permisos: newUser.permisos })
 
         res.cookie('token', token)
 
@@ -50,7 +50,8 @@ export const login = async (req, res) => {
             id: userFound.id,
             nombre: userFound.nombre,
             email: userFound.email,
-            rol: userFound.rol
+            rol: userFound.rol,
+            permisos: userFound.permisos
         })
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -65,10 +66,10 @@ export const verifyToken = async (req, res) => {
     jwt.verify(token, TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).json({ message: 'No autorizado' })
 
-        const searchResult = await pool.query('SELECT id, nombre, email, rol FROM usuarios WHERE id = $1', [user.id])
+        const searchResult = await pool.query('SELECT id, nombre, email, rol , permisos FROM usuarios WHERE id = $1', [user.id])
         const userFound = searchResult.rows[0]
         if (!userFound) return res.status(401).json({ message: 'No autorizado' })
 
-        return res.json({ id: user.id, nombre: userFound.nombre, email: userFound.email, rol: userFound.rol })
+        return res.json({ id: user.id, nombre: userFound.nombre, email: userFound.email, rol: userFound.rol, permisos: userFound.permisos })
     })
 }

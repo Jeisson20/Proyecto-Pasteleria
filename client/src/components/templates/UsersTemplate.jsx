@@ -4,7 +4,7 @@ import { Title } from "../atomos/Title.jsx";
 import { Header } from "../organismos/Header.jsx";
 import { useState } from "react";
 import SearchBar from "../moleculas/SearchBar.jsx";
-import { Device } from "../../styles/breackpoints.jsx";
+
 export function UsersTemplate() {
   const [state, setState] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,37 +30,31 @@ export function UsersTemplate() {
 
 const Container = styled.div`
   position: relative;
-  overflow: hidden;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
-  background-color: ${(props) => props.theme.bgtotal};
+  background-color: ${({ theme }) => theme.bgtotal};
   color: ${({ theme }) => theme.text};
-  display: grid;
-  padding: 15px;
-  grid-template:
-    "header" 100px
-    "main" auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+
   .header {
     grid-area: header;
-    /* background-color: rgba(103, 93, 241, 0.14); */
     display: flex;
     align-items: center;
   }
-  .area1 {
-    grid-area: area1;
-    /* background-color: rgba(229, 67, 26, 0.14); */
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-  }
 
   .title {
-    font-size: 40px;
+    font-size: clamp(1.5rem, 2vw + 1rem, 2.5rem); /* 👈 fluido */
   }
 
   .main {
-    grid-area: main;
-    /* background-color: rgba(179, 46, 241, 0.14); */
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(280px, 1fr)
+    ); /* 👈 grid adaptativo */
+    gap: 1rem;
   }
 `;

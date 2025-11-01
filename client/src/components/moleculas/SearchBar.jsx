@@ -1,5 +1,17 @@
-// molecules/SearchBar.jsx
 import styled from "styled-components";
+
+export default function SearchBar({ value, onChange }) {
+  return (
+    <Wrapper>
+      <Input
+        type="text"
+        placeholder="Buscar usuario..."
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </Wrapper>
+  );
+}
 
 const Wrapper = styled.div`
   margin-bottom: 1rem;
@@ -21,16 +33,3 @@ const Input = styled.input`
     border-color: ${({ theme }) => theme.primary};
   }
 `;
-
-export default function SearchBar({ value, onChange }) {
-  return (
-    <Wrapper>
-      <Input
-        type="text"
-        placeholder="Buscar usuario..."
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
-    </Wrapper>
-  );
-}

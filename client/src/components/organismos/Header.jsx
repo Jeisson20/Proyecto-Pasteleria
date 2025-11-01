@@ -42,11 +42,7 @@ export function Header({ stateConfig }) {
         <span className="nombre">{user?.nombre}</span>
 
         {stateConfig.state && (
-          <ListaMenuDesplegable
-            data={DesplegableUser}
-            top="62px"
-            onClick={handleAccion}
-          />
+          <ListaMenuDesplegable data={DesplegableUser} onClick={handleAccion} />
         )}
       </Datauser>
 

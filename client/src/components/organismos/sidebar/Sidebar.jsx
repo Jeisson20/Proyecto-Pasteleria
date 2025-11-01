@@ -8,9 +8,11 @@ import {
 import { v } from "../../../styles/variables";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../../hook/useAuth.jsx";
+import { useFilteredLinks } from "../../../hook/useSidebarLinks.jsx";
 export function Sidebar({ state, setState }) {
   const { user } = useAuth();
   const rol = user?.rol;
+  const links = useFilteredLinks(LinksArray);
 
   return (
     <Main $isopen={state.toString()}>
@@ -26,26 +28,22 @@ export function Sidebar({ state, setState }) {
           <h2>Pasteleria</h2>
         </div>
 
-        {LinksArray.filter(({ roles }) => !roles || roles.includes(rol)).map(
-          ({ icon, label, to }) => (
-            <div
-              className={state ? "LinkContainer active" : "LinkContainer"}
-              key={label}
+        {links.map(({ icon, label, to }) => (
+          <div
+            className={state ? "LinkContainer active" : "LinkContainer"}
+            key={label}
+          >
+            <NavLink
+              to={to}
+              className={({ isActive }) => `Links${isActive ? ` active` : ``}`}
             >
-              <NavLink
-                to={to}
-                className={({ isActive }) =>
-                  `Links${isActive ? ` active` : ``}`
-                }
-              >
-                <div className="Linkicon">{icon}</div>
-                <span className={state ? "label_ver" : "label_oculto"}>
-                  {label}
-                </span>
-              </NavLink>
-            </div>
-          )
-        )}
+              <div className="Linkicon">{icon}</div>
+              <span className={state ? "label_ver" : "label_oculto"}>
+                {label}
+              </span>
+            </NavLink>
+          </div>
+        ))}
 
         <Divider />
 

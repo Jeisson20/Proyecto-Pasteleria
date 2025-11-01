@@ -2,11 +2,11 @@ import styled from "styled-components";
 export function CardDatosEmpresa({ titulo, valor, img }) {
   return (
     <Container>
-      <div class="card">
-        <div class="pricing-block-content">
-          <p class="pricing-plan">{titulo}</p>
-          <div class="price-value">
-            <p class="price-number">{valor}</p>
+      <div className="card">
+        <div className="pricing-block-content">
+          <p className="pricing-plan">{titulo}</p>
+          <div className="price-value">
+            <p className="price-number">{valor}</p>
             {img && <img src={img} />}
           </div>
         </div>
@@ -19,7 +19,6 @@ const Container = styled.div`
   width: 100%;
   .card {
     position: relative;
-
     background: #fffefe;
     padding: 1rem;
     border-radius: 1rem;

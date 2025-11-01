@@ -96,10 +96,6 @@ const TableContainer = styled.div`
   border-radius: 8px;
   margin-top: 1rem;
   overflow-x: auto;
-
-  @media ${Device.mobile} {
-    border: none;
-  }
 `;
 
 const StyledTable = styled.table`
@@ -123,15 +119,6 @@ const Thead = styled.thead`
     top: 0;
     background: ${({ theme }) => theme.bg};
     z-index: 2;
-    @media ${Device.mobile} {
-      padding: 0.5rem 0.3rem;
-      font-size: 10px;
-    }
-
-    @media ${Device.tablet} {
-      padding: 0.6rem;
-      font-size: 14px;
-    }
   }
 `;
 
@@ -160,15 +147,6 @@ const Tbody = styled.tbody`
     padding: 0.8rem;
     text-align: center;
     border-bottom: 1px solid ${({ theme }) => theme.bg4};
-    @media ${Device.mobile} {
-      padding: 0.5rem 0.3rem;
-      font-size: 10px;
-    }
-
-    @media ${Device.tablet} {
-      padding: 0.6rem;
-      font-size: 14px;
-    }
   }
 
   tr:hover {

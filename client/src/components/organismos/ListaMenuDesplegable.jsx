@@ -22,7 +22,7 @@ const Container = styled.div`
   position: absolute;
   background-color: ${({ theme }) => theme.bg3};
   border-radius: 22px;
-  top: ${(props) => props.top};
+  top: 62px;
   box-shadow: ${() => v.boxshadowGray};
   z-index: 1;
 `;

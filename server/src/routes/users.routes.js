@@ -10,10 +10,10 @@ import { adminRequired } from "../middlewares/roleRequired.js"
 
 const router = Router()
 
-router.get("/users", authRequired, adminRequired, getAllUsers)
+router.get("/usuarios", authRequired, adminRequired, getAllUsers)
 
-router.put("/users/:id", authRequired, adminRequired, updateUser)
+router.put("/usuarios/:id", authRequired, adminRequired, updateUser)
 
-router.delete("/users/:id", authRequired, adminRequired, deleteUser)
+router.delete("/usuarios/:id", authRequired, adminRequired, deleteUser)
 
 export default router

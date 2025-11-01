@@ -14,19 +14,14 @@ import {
 } from "react-icons/md";
 import { FcPicture } from "react-icons/fc";
 import { CgMathPlus } from "react-icons/cg";
-import { TbBrandSupabase } from "react-icons/tb";
-import { FaReact } from "react-icons/fa";
 import { BsArrowDown, BsArrowUpShort } from "react-icons/bs";
-import { FaBalanceScale } from "react-icons/fa";
 import logo from "../assets/logoPasteleria.png";
-import { BsGoogle } from "react-icons/bs";
 import { RiCloseLine } from "react-icons/ri";
 import { BiSave } from "react-icons/bi";
 import { BsQuestionCircle } from "react-icons/bs";
 import { HiOutlineChartPie } from "react-icons/hi";
 import { SlGraph } from "react-icons/sl";
 import { BsBarChartLine } from "react-icons/bs";
-import { AiOutlineCalculator } from "react-icons/ai";
 import { BsCalendarCheck } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 import { GrFormPrevious, GrCaretNext } from "react-icons/gr";
@@ -97,20 +92,15 @@ export const v = {
   verde: `#53B257`,
   rojo: `#F54E41`,
   agregar: CgMathPlus,
-  iconosupabase: TbBrandSupabase,
-  iconoreact: FaReact,
   flechaabajolarga: BsArrowDown,
   flechaarribalarga: BsArrowUpShort,
-  balance: FaBalanceScale,
   logo: logo,
-  iconogoogle: BsGoogle,
   iconocerrar: RiCloseLine,
   iconoguardar: BiSave,
   iconoayuda: BsQuestionCircle,
   iconopie: HiOutlineChartPie,
   iconolineal: SlGraph,
   iconobars: BsBarChartLine,
-  iconocalculadora: AiOutlineCalculator,
   iconocheck: BsCalendarCheck,
   colorSecundario: `#DAC1FF`,
   iconoflechaderecha: IoIosArrowForward,
