@@ -49,7 +49,7 @@ export function UsersTable({ searchTerm = "" }) {
               <th>Email</th>
               <th>Productos</th>
               <th>Pedidos</th>
-              <th>Clientes</th>
+              <th>Facturas</th>
               <th>Rol</th>
               <th>Eliminar</th>
             </tr>

@@ -6,6 +6,8 @@ import { UsersProvider } from "./context/UsersContext.jsx";
 import { ThemeContext } from "./context/ThemeContext.jsx";
 import { Light, Dark } from "./styles/themes.jsx";
 import AppContent from "./layout/AppContent.jsx";
+import { ProductsProvider } from "./context/ProductContext.jsx";
+import { OrdersProvider } from "./context/OrdersContext.jsx";
 
 function App() {
   const [themeuse, setTheme] = useState("dark");
@@ -16,9 +18,13 @@ function App() {
       <ThemeProvider theme={themeStyle}>
         <AuthProvider>
           <UsersProvider>
-            <BrowserRouter>
-              <AppContent />
-            </BrowserRouter>
+            <ProductsProvider>
+              <OrdersProvider>
+                <BrowserRouter>
+                  <AppContent />
+                </BrowserRouter>
+              </OrdersProvider>
+            </ProductsProvider>
           </UsersProvider>
         </AuthProvider>
       </ThemeProvider>

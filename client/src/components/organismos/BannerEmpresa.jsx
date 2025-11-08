@@ -1,21 +1,29 @@
 import styled from "styled-components";
 import { v } from "../../styles/variables";
 import { CardDatosEmpresa } from "../moleculas/CardDatosEmpresa";
+import { useOrders } from "../../context/OrdersContext.jsx";
+
 export function BannerEmpresa() {
+  const { orders } = useOrders();
+  const totalPedidos = orders.length;
+  const totalIngresos = orders.reduce(
+    (acc, o) => acc + Number(o.total || 0),
+    0
+  );
   return (
     <Container>
       <div className="content-wrapper-context">
         <span className="titulo">
           {<v.iconoempresa />}
-          Pasteleria "La Esquina"
+          Pastelería "La Esquina"
         </span>
-        <div className="content-text">Resumen de pedidos y clientes:</div>
+        <div className="content-text">Resumen de pedidos e ingresos:</div>
         <ContentCards>
-          <CardDatosEmpresa titulo="Pedidos" valor="999" />
-
-          <CardDatosEmpresa titulo="Clientes" valor="999" />
+          <CardDatosEmpresa titulo="Pedidos" valor={totalPedidos} />
+          <CardDatosEmpresa titulo="Ingresos" valor={`$${totalIngresos}`} />
         </ContentCards>
       </div>
+
       <div className="contentsvg">
         <svg
           className="opacity-0 group-hover:opacity-100 transform-gpu transition-all will-change-auto duration-600 ease-in-out"

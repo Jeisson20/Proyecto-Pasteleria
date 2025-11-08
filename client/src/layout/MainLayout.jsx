@@ -4,6 +4,7 @@ import { Sidebar } from "../components/organismos/sidebar/Sidebar.jsx";
 import { MenuHambur } from "../components/organismos/Menuhambur.jsx";
 import { AppRoutes } from "../routes/AppRoutes.jsx";
 import { Device } from "../styles/breackpoints.jsx";
+import { NotificacionPedidos } from "../components/organismos/NotificacionPedidos.jsx";
 
 export function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -22,6 +23,7 @@ export function MainLayout() {
       <section className="ContentRoutes">
         <AppRoutes />
       </section>
+      <NotificacionPedidos />
     </Container>
   );
 }

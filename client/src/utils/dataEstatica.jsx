@@ -29,11 +29,11 @@ export const LinksArray = [
     permisoKey: "productos",
   },
   {
-    label: "Clientes",
-    icon: <v.iconoCliente />,
-    to: "/clientes",
+    label: "Facturas",
+    icon: <v.iconoFactura />,
+    to: "/facturas",
     roles: ["admin", "empleado"],
-    permisoKey: "clientes",
+    permisoKey: "facturas",
   },
   {
     label: "Pedidos",

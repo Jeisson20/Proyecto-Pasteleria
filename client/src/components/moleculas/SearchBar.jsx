@@ -5,7 +5,7 @@ export default function SearchBar({ value, onChange }) {
     <Wrapper>
       <Input
         type="text"
-        placeholder="Buscar usuario..."
+        placeholder="Buscar..."
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />

@@ -18,3 +18,30 @@ body::-webkit-scrollbar-thumb {
 .Link {
   text-decoration: none;
 }
+
+@media print {
+  body {
+    visibility: hidden; /* oculta todo */
+  }
+
+  .printable {
+    visibility: visible;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}
+
+/* src/index.css */
+.notificacion {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #323232;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+}
