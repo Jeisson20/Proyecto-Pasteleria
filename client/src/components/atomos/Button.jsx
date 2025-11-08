@@ -1,15 +1,20 @@
 import styled from "styled-components";
 
 export const Button = styled.button`
-  background: transparent;
+  background: ${({ $variant, theme }) =>
+    $variant === "primary" ? theme.primary : "transparent"};
+  color: ${({ $variant, theme }) =>
+    $variant === "primary" ? "white" : theme.text};
   border: none;
-  color: ${({ theme }) => theme.bg5};
-  font-size: 1.2rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: bold;
   transition: transform 0.2s ease;
 
   &:hover {
-    transform: scale(1.2);
-    color: ${({ theme }) => theme.primary};
+    transform: scale(1.05);
+    background: ${({ $variant, theme }) =>
+      $variant === "primary" ? theme.primaryHover : theme.bg4};
   }
 `;

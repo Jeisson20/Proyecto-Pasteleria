@@ -1,55 +1,16 @@
-import { useState } from "react";
 import styled from "styled-components";
-import { useProducts } from "../../context/ProductContext.jsx";
+import { useProductForm } from "../../hook/useProductForm.jsx";
+import { Button } from "../atomos/Button.jsx";
 
 export function ProductForm({ editing, onSaved, onCancel }) {
-  const { createProduct, updateProduct } = useProducts();
-
-  const [formData, setFormData] = useState(
-    editing || {
-      nombre: "",
-      descripcion: "",
-      precio: 0,
-      stock: 0,
-    }
-  );
-
-  const [file, setFile] = useState(null);
-  const [preview, setPreview] = useState(editing?.imagen_url || "");
-
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const handleFile = (file) => {
-    if (!file) return;
-    const url = URL.createObjectURL(file);
-    setPreview(url);
-    setFile(file);
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    handleFile(file);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const data = new FormData();
-    data.append("nombre", formData.nombre);
-    data.append("descripcion", formData.descripcion);
-    data.append("precio", formData.precio);
-    data.append("stock", formData.stock);
-    if (file) data.append("imagen", file);
-
-    if (editing?.id) {
-      await updateProduct(editing.id, data);
-    } else {
-      await createProduct(data);
-    }
-    onSaved();
-  };
+  const {
+    formData,
+    handleChange,
+    handleFile,
+    handleDrop,
+    handleSubmit,
+    preview,
+  } = useProductForm(editing, onSaved);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -117,8 +78,10 @@ export function ProductForm({ editing, onSaved, onCancel }) {
       </DropZone>
 
       <Actions>
-        <Button type="submit">{editing?.id ? "Actualizar" : "Crear"}</Button>
-        <Button type="button" onClick={onCancel} $secondary>
+        <Button type="submit" $variant="primary">
+          {editing?.id ? "Actualizar" : "Crear"}
+        </Button>
+        <Button type="button" onClick={onCancel} $variant="secondary">
           Cancelar
         </Button>
       </Actions>
@@ -175,18 +138,4 @@ const Actions = styled.div`
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
-`;
-
-const Button = styled.button`
-  padding: 0.8rem 1.2rem;
-  background: ${({ $secondary, theme }) =>
-    $secondary ? theme.bg4 : theme.primary};
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  &:hover {
-    opacity: 0.9;
-  }
 `;

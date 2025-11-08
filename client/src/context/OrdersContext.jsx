@@ -61,7 +61,6 @@ export const OrdersProvider = ({ children }) => {
     try {
       const res = await getOrdersRequest();
       setOrders(res.data);
-      notify("ORDERS_LOADED", res.data);
     } catch (error) {
       console.log(error);
     }
