@@ -2,9 +2,17 @@ import styled from "styled-components";
 import { v } from "../../styles/variables";
 import { CardDatosEmpresa } from "../moleculas/CardDatosEmpresa";
 import { useOrders } from "../../context/OrdersContext.jsx";
+import { useEffect } from "react";
 
 export function BannerEmpresa() {
-  const { orders } = useOrders();
+  const { orders, getOrders } = useOrders();
+
+  useEffect(() => {
+    if (orders.length === 0) {
+      getOrders();
+    }
+  }, []);
+
   const totalPedidos = orders.length;
   const totalIngresos = orders.reduce(
     (acc, o) => acc + Number(o.total || 0),
