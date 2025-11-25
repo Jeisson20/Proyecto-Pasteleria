@@ -36,6 +36,12 @@ export const deleteProduct = async (req, res) => {
         if (!deleted) return res.status(404).json({ message: "Producto no encontrado" });
         res.sendStatus(204);
     } catch (error) {
+        // Si la facade lanza PRODUCT_HAS_ORDERS devolvemos 400 con mensaje claro.
+        // Esto evita que el cliente reciba un 500 genérico.
+        if (error.message === "PRODUCT_HAS_ORDERS") {
+            return res.status(400).json({ message: "No se puede eliminar el producto porque está relacionado con un pedido" });
+        }
+        // Otros errores se devuelven como 500 para ser investigados.
         res.status(500).json({ message: error.message });
     }
 };

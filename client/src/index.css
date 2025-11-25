@@ -31,6 +31,10 @@ body::-webkit-scrollbar-thumb {
     top: 0;
     width: 100%;
   }
+
+  button {
+    visibility: hidden;
+  }
 }
 
 /* src/index.css */

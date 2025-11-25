@@ -6,6 +6,21 @@ export const createOrder = async (req, res) => {
         const saved = await OrderFacade.createOrder(req.body);
         res.status(201).json(saved);
     } catch (error) {
+        // Mapeo de errores lanzados desde la facade a respuestas 4xx
+        // Los errores con prefijos PRODUCT_OUT_OF_STOCK, INSUFFICIENT_STOCK o
+        // PRODUCT_NOT_FOUND son generados por `OrderFacade.createOrder` cuando
+        // detecta problemas de inventario; devolveremos 400 para que el cliente
+        // pueda mostrar un mensaje amigable al usuario.
+        if (error.message && error.message.startsWith('PRODUCT_OUT_OF_STOCK')) {
+            return res.status(400).json({ message: 'No se puede realizar el pedido: producto sin stock' });
+        }
+        if (error.message && error.message.startsWith('INSUFFICIENT_STOCK')) {
+            return res.status(400).json({ message: 'No se puede realizar el pedido: stock insuficiente para uno o más productos' });
+        }
+        if (error.message && error.message.startsWith('PRODUCT_NOT_FOUND')) {
+            return res.status(400).json({ message: 'No se puede realizar el pedido: producto no encontrado' });
+        }
+
         res.status(500).json({ message: error.message });
     }
 };

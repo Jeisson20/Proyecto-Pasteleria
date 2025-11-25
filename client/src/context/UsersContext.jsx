@@ -32,9 +32,20 @@ export const UsersProvider = ({ children }) => {
   const deleteUser = async (id) => {
     try {
       const res = await deleteUserRequest(id);
-      if (res.status === 204) setUsers(users.filter((user) => user.id !== id));
+      // El servidor puede devolver 200 o 204. Si la eliminación no está
+      // permitida (p. ej. el usuario tiene pedidos) el servidor devuelve
+      // un 400 con un mensaje que aquí mostramos al administrador.
+      // En ese caso entra en el catch y mostramos la alerta correspondiente.
+      if (res.status === 204 || res.status === 200) {
+        setUsers((prev) => prev.filter((user) => user.id !== id));
+      }
     } catch (error) {
-      console.log(error);
+      const msg =
+        error?.response?.data?.message ||
+        error.message ||
+        "Error al eliminar usuario";
+      // show a user-friendly alert; UI can be improved to use toasts
+      window.alert(msg);
     }
   };
 

@@ -63,6 +63,32 @@ export function ProductForm({ editing, onSaved, onCancel }) {
         />
       </label>
 
+      <label>
+        Costo (opcional)
+        <input
+          name="costo"
+          type="number"
+          value={formData.costo}
+          onChange={handleChange}
+          placeholder="Ej: 6.00"
+          min="0"
+          step="0.01"
+        />
+      </label>
+
+      <label>
+        % Ganancia (opcional)
+        <input
+          name="gananciaPercent"
+          type="number"
+          value={formData.gananciaPercent}
+          onChange={handleChange}
+          placeholder="Ej: 50"
+          min="0"
+          step="0.01"
+        />
+      </label>
+
       <DropZone onDrop={handleDrop} onDragOver={(e) => e.preventDefault()}>
         {preview ? (
           <img src={preview} alt="preview" />

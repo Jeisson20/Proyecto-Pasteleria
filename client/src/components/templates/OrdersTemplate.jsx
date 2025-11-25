@@ -20,7 +20,7 @@ const Container = styled.div`
   padding: 2rem;
   background: ${({ theme }) => theme.bgtotal};
   color: ${({ theme }) => theme.text};
-  height: 100%;
+  min-height: 100vh;
 
   .title {
     font-size: clamp(1.5rem, 2vw + 1rem, 2.5rem);

@@ -82,6 +82,12 @@ export const OrdersProvider = ({ children }) => {
       clearCart();
       notify("ORDER_CREATED", res.data);
     } catch (error) {
+      // Si el servidor devuelve un error de stock, lo mostramos al usuario.
+      const msg =
+        error?.response?.data?.message ||
+        error.message ||
+        "Error al crear pedido";
+      window.alert(msg);
       console.log("Error al crear pedido:", error);
     }
   };
@@ -104,18 +110,46 @@ export const OrdersProvider = ({ children }) => {
 
   const deleteOrder = async (id) => {
     try {
-      await deleteOrderRequest(id);
+      const res = await deleteOrderRequest(id);
+      // éxito (200 o 204): eliminamos del estado local
       setOrders((prev) => prev.filter((o) => o.id !== id));
       notify("ORDER_DELETED", { id });
+      // Disparamos un evento global para que otros contextos puedan
+      // reaccionar y, por ejemplo, refrescar la lista de productos (restauración de stock).
+      try {
+        window.dispatchEvent(
+          new CustomEvent("ORDER_DELETED", { detail: { id } })
+        );
+      } catch {}
     } catch (error) {
+      // Mostramos el mensaje proveniente del servidor para que el usuario
+      // sepa por qué falló la eliminación (p. ej. permisos, error interno).
+      const msg =
+        error?.response?.data?.message ||
+        error.message ||
+        "Error al eliminar pedido";
+      window.alert(msg);
       console.log("Error al eliminar pedido:", error);
     }
   };
 
   const addToCart = (product) => {
+    // Evitamos añadir al carrito productos sin stock y evitamos que el
+    // usuario supere el stock disponible al incrementar cantidad.
+    if (Number(product.stock ?? 0) <= 0) {
+      return window.alert(
+        "No se puede agregar el producto: stock insuficiente"
+      );
+    }
+
     setCart((prev) => {
       const existing = prev.find((p) => p.id === product.id);
       if (existing) {
+        // prevent exceeding available stock
+        if (existing.cantidad + 1 > Number(product.stock ?? 0)) {
+          window.alert("No puedes agregar más unidades: stock insuficiente");
+          return prev;
+        }
         return prev.map((p) =>
           p.id === product.id ? { ...p, cantidad: p.cantidad + 1 } : p
         );

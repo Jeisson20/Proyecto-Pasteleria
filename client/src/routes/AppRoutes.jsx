@@ -29,7 +29,7 @@ export function AppRoutes() {
         element={
           <ProtectedRoute
             roles={["admin", "empleado", "cliente"]}
-            permisoKey="productos"
+            permisoKey="pedidos"
           />
         }
       >

@@ -2,9 +2,12 @@ import styled from "styled-components";
 import { Button } from "../atomos/Button.jsx";
 import { Icono } from "../atomos/Icono.jsx";
 import { useOrders } from "../../context/OrdersContext.jsx";
+import { useAuth } from "../../hook/useAuth.jsx";
 
 export default function ProductCard({ product, canEdit, onEdit, onDelete }) {
   const { addToCart } = useOrders();
+  const { user } = useAuth();
+  const isAdminOrEmployee = user?.rol === "admin" || user?.rol === "empleado";
 
   return (
     <Card>
@@ -17,6 +20,18 @@ export default function ProductCard({ product, canEdit, onEdit, onDelete }) {
       </h3>
       <p>{product.descripcion}</p>
       <span>${product.precio}</span>
+      {isAdminOrEmployee && product.ganancia_percent > 0 && (
+        // Mostramos tanto el porcentaje de ganancia como la ganancia en dinero
+        // calculada como `precio - costo`. Solo lo ven admin/empleado.
+        <GananciaInfo>
+          📊 {product.ganancia_percent}% - $
+          {typeof product.costo === "number"
+            ? (
+                Number(product.precio ?? 0) - Number(product.costo ?? 0)
+              ).toFixed(2)
+            : "0.00"}
+        </GananciaInfo>
+      )}
 
       <div className="actions">
         <Button onClick={() => addToCart(product)}>Agregar al carrito</Button>
@@ -82,4 +97,14 @@ const Card = styled.div`
     gap: 0.5rem;
     margin-top: auto;
   }
+`;
+
+const GananciaInfo = styled.div`
+  background: ${({ theme }) => theme.bg2};
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: ${({ theme }) => theme.primary};
+  font-weight: 600;
+  text-align: center;
 `;

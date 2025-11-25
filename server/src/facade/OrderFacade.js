@@ -23,7 +23,29 @@ export class OrderFacade {
         const pedido = pedidoResult.rows[0];
         let total = 0;
 
+        // Validate stock for each item before creating detalle and decrementing
+        // --- Validaciones antes de crear el detalle del pedido ---
+        // Se comprueba para cada item que:
+        // 1) El producto existe.
+        // 2) Tiene stock > 0.
+        // 3) El stock es suficiente para la cantidad solicitada.
+        // Si alguna validación falla lanzamos un Error con prefijo específico
+        // (PRODUCT_NOT_FOUND, PRODUCT_OUT_OF_STOCK, INSUFFICIENT_STOCK)
+        // El controlador mapeará esos errores a respuestas 4xx para el cliente.
+        // Esto evita crear pedidos que dejen el inventario en negativo.
         for (const item of items) {
+            const prodRes = await pool.query(`SELECT stock FROM productos WHERE id = $1`, [item.producto_id]);
+            if (prodRes.rows.length === 0) {
+                throw new Error(`PRODUCT_NOT_FOUND:${item.producto_id}`);
+            }
+            const stock = Number(prodRes.rows[0].stock ?? 0);
+            if (stock <= 0) {
+                throw new Error(`PRODUCT_OUT_OF_STOCK:${item.producto_id}`);
+            }
+            if (stock < Number(item.cantidad ?? 0)) {
+                throw new Error(`INSUFFICIENT_STOCK:${item.producto_id}`);
+            }
+
             const subtotal = item.cantidad * item.precio_unitario;
             total += subtotal;
 
@@ -32,7 +54,6 @@ export class OrderFacade {
              VALUES ($1, $2, $3, $4)`,
                 [pedido.id, item.producto_id, item.cantidad, item.precio_unitario]
             );
-
 
             await pool.query(
                 `UPDATE productos SET stock = stock - $1 WHERE id = $2`,
@@ -125,12 +146,43 @@ export class OrderFacade {
     }
 
     static async deleteOrder(id) {
-        const result = await pool.query(
-            `DELETE FROM pedidos WHERE id = $1 RETURNING *`,
-            [id]
-        );
+        // --- Eliminación segura de pedido con restauración de stock ---
+        // Pasos:
+        // 1) Iniciamos una transacción.
+        // 2) Leemos los items en `detalle_pedidos` y por cada uno incrementamos el stock
+        //    en la tabla `productos` (restaurando las unidades vendidas).
+        // 3) Borramos los `detalle_pedidos` del pedido y finalmente el `pedido`.
+        // 4) Commit o rollback en caso de error.
+        // Esto asegura que al eliminar un pedido el inventario vuelva a su estado correcto.
+        try {
+            await pool.query("BEGIN");
 
-        const deleted = result.rows[0];
-        return deleted;
+            const detallesRes = await pool.query(
+                `SELECT producto_id, cantidad FROM detalle_pedidos WHERE pedido_id = $1`,
+                [id]
+            );
+
+            for (const d of detallesRes.rows) {
+                await pool.query(
+                    `UPDATE productos SET stock = stock + $1 WHERE id = $2`,
+                    [d.cantidad, d.producto_id]
+                );
+            }
+
+            await pool.query(`DELETE FROM detalle_pedidos WHERE pedido_id = $1`, [id]);
+
+            const result = await pool.query(
+                `DELETE FROM pedidos WHERE id = $1 RETURNING *`,
+                [id]
+            );
+
+            await pool.query("COMMIT");
+
+            const deleted = result.rows[0];
+            return deleted;
+        } catch (err) {
+            await pool.query("ROLLBACK");
+            throw err;
+        }
     }
 }
